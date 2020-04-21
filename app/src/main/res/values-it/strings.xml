@@ -334,7 +334,7 @@ ed anonima"</string>
     <string name="meldungen_additional_info_text1">"Per interrompere la diffusione di un virus, è necessario interrompere la catena di infezione. Puoi farlo isolando le persone contagiose. C'è però un problema con il virus COVID-19: potresti essere contagioso prima di sentirti male! Ciò consente al virus di diffondersi, anche se le persone con sintomi si isolano questo perché siamo un passo indietro."</string>
 
     <!-- Meldungen: zusätzlicher Info Text -->
-    <string name="meldungen_additional_info_text2">"Pertanto le persone che sono entrate in contatto essere informate. Ciò consente loro di isolarsi presto, anche prima di sperimentare sintomi. Ovviamente, non tutti i contatti hanno il virus, ma quelli che ce l'hanno non lo trasmettono. Così saremo un passo avanti rispetto al virus."</string>
+    <string name="meldungen_additional_info_text2">"Pertanto le persone che sono entrate in contatto con chi è risultato positivo al COVID-19 devono essere informate. Ciò consente loro di isolarsi presto prima di sperimentare sintomi evitando così di contagiare altre persone. Ovviamente, non tutti i contatti hanno il virus, ma in questo modo quelli che ce l'hanno non lo trasmettono. Così saremo un passo avanti rispetto al virus."</string>
 
     <!-- Hinweis beim Eingabefeld für den Authentifizierungs-Code -->
     <string name="auth_code_input_hint">"000-000"</string>
