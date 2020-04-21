@@ -189,7 +189,7 @@ Continua a praticare misure igieniche protettive e seguire le regole di comporta
     <string name="push_exposed_text">"Apri la App Protetti per ulteriori inforamzioni."</string>
     <string name="onboarding_top_label_how">"Come funziona:"</string>
     <string name="onboarding_title_1">"Un passo avanti"</string>
-    <string name="onboarding_desc_1">"Con l'applicazione Protetti possiamo cooperare per poter tenere la diffizione COVID-19 sotto controllo. L'applicazione Noi permette agli utenti possibilmente infetti di potersi autoisolarsi prima di avere sintomi."</string>
+    <string name="onboarding_desc_1">"Con l'applicazione Protetti possiamo cooperare per poter tenere la diffizione COVID-19 sotto controllo. L'applicazione Protetti permette agli utenti possibilmente infetti di potersi autoisolarsi prima di avere sintomi."</string>
     <string name="onboarding_title_2">"Automatica
 ed anonima"</string>
     <string name="onboarding_desc_2">"Protetti rileva gli incontri con altri utenti e ne tiene traccia in modo anonimo e criptato sul dispositivo."</string>
@@ -284,13 +284,13 @@ ed anonima"</string>
     <string name="bluetooth_setting_data_explanation_title">"I miei dati sono al sicuro?"</string>
 
     <!-- Bluetooth Setting: Text unten -->
-    <string name="bluetooth_setting_tracking_explanation_text1">"Utilizzando il Bluetooth (BLE)Low Energy) l'app riconosce gli ecounter con altri utenti. Tali incontri verranno registrati dall'app, se due utenti si avvicinano per un certo periodo di tempo e vengono eliminati dopo 21 giorni."</string>
+    <string name="bluetooth_setting_tracking_explanation_text1">"Utilizzando il Bluetooth (BLE) l'applicazione traccia gli incontri con altri utenti. Tali incontri sono registrati dall'applicazione se due utenti si avvicinano per un certo periodo di tempo, per poi essere eliminati dopo 21 giorni."</string>
 
     <!-- Bluetooth Setting: Text unten -->
     <string name="bluetooth_setting_tracking_explanation_text2">"Un incontro con un altro utente viene salvato solo localmente sul tuo smartphone."</string>
 
     <!-- Bluetooth Setting: Text unten -->
-    <string name="bluetooth_setting_data_explanation_text1">"Ogni app ha un ID dinamico che viene generato casualmente ogni 15 minuti usando «HMAC (SHA256)». Quindi ogni utente rimane anonimo."</string>
+    <string name="bluetooth_setting_data_explanation_text1">"Ogni app ha un ID dinamico che viene generato casualmente ogni 15 minuti usando «HMAC (SHA256)». Questo permette permette ad ogni utente di rimane anonimo."</string>
 
     <!-- Bluetooth Setting: Text unten -->
     <string name="bluetooth_setting_data_explanation_text2">"Caratteristiche Principali:
