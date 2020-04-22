@@ -42,13 +42,13 @@
     <string name="force_update_title">"Aggiorna"</string>
     <string name="homescreen_handshakes_module_count_info_label">"I contatti saranno memorizzati in modo anonimo sul dispositivo"</string>
     <string name="homescreen_handshakes_module_count_label_format">"{count} nelle ultime 48 ore"</string>
-    <string name="homescreen_handshakes_module_info_label">"Qui troverai le informazioni sulle persone incontrate che forniscono aggiornamenti su COVID-19."</string>
+    <string name="homescreen_handshakes_module_info_label">"Qui troverai le informazioni sulle persone incontrate che forniscono aggiornamenti sulla COVID-19."</string>
 
     <!-- Informieren Titel -->
     <string name="inform_title">"Ferma la catena dell'infezione"</string>
 
     <!-- Inform Subtext -->
-    <string name="inform_subtext">"Voglio interrompere la catena di infezione da COVID-19."</string>
+    <string name="inform_subtext">"Voglio interrompere la catena di infezione della COVID-19."</string>
 
     <!-- Inform: Symptome Button -->
     <string name="inform_button_symptom_title">"Sintomi"</string>
@@ -62,7 +62,7 @@
     <!-- Inform Button Positiv -->
     <string name="inform_button_positive_text">"A seguito di un test recente sono positivo."</string>
     <string name="what_to_do_button">"Cosa fare"</string>
-    <string name="homescreen_handshakes_module_gemeldet_label">"Una persona che hai incontrato recentemente ha inserito informazioni su COVID 19."</string>
+    <string name="homescreen_handshakes_module_gemeldet_label">"Una persona che hai incontrato recentemente ha inserito informazioni sulla COVID 19."</string>
 
     <!-- Inform-Flow -->
     <string name="inform_continue_button">"Continua"</string>
@@ -79,14 +79,14 @@ Voglio interrompere la possibile catene consentendo a questa App di contattare l
     <string name="inform_send_button_title">"Invia"</string>
 
     <!-- Informieren: Senden Text Symptome -->
-    <string name="inform_symptoms_send_text">"Presento uno dei sintomi indicati che possono essere attribuiti al COVID-19.
+    <string name="inform_symptoms_send_text">"Presento uno dei sintomi indicati che possono essere attribuiti alla COVID-19.
 
 Voglio interrompere la possibile catene consentendo a questa App di contattare le persone a cui sono stato vicino recentemente."</string>
 
     <!-- Informieren: Danke -->
     <string name="inform_send_thankyou">"GRAZIE!"</string>
     <string name="inform_send_thankyou_text">"Le tue informazioni sono state trasmesse.
-Grazie al il tuo importante contributo la diffusione del COVID-19 viene tenuta sotto controllo."</string>
+Grazie al il tuo importante contributo la diffusione della COVID-19 viene tenuta sotto controllo."</string>
 
     <!-- Symptome -->
     <string name="inform_symptom_coughdry">"Tosse secca"</string>
@@ -189,7 +189,7 @@ Continua a praticare misure igieniche protettive e seguire le regole di comporta
     <string name="push_exposed_text">"Apri la App Protetti per ulteriori inforamzioni."</string>
     <string name="onboarding_top_label_how">"Come funziona:"</string>
     <string name="onboarding_title_1">"Un passo avanti"</string>
-    <string name="onboarding_desc_1">"Con l'applicazione Protetti possiamo cooperare per poter tenere la diffizione COVID-19 sotto controllo. L'applicazione Protetti permette agli utenti possibilmente infetti di potersi autoisolarsi prima di avere sintomi."</string>
+    <string name="onboarding_desc_1">"Con l'applicazione Protetti possiamo cooperare per poter tenere la diffusione della COVID-19 sotto controllo. L'applicazione Protetti permette agli utenti possibilmente infetti di potersi autoisolarsi prima di avere sintomi."</string>
     <string name="onboarding_title_2">"Automatica
 ed anonima"</string>
     <string name="onboarding_desc_2">"Protetti rileva gli incontri con altri utenti e ne tiene traccia in modo anonimo e criptato sul dispositivo."</string>
@@ -218,10 +218,10 @@ ed anonima"</string>
     <string name="button_battery_optimization_deactivated">"Ottimizzazione della batteria disattivata"</string>
 
     <!-- Gleicher Inhalt wie homescreen_handshakes_module_info_label, aber ohne Symptome -->
-    <string name="homescreen_handshakes_module_info_label_nosymptoms">"Questo viene mostrato quando le persone che hai incontrato inviano indicazioni su COVID-19."</string>
+    <string name="homescreen_handshakes_module_info_label_nosymptoms">"Questo viene mostrato quando le persone che hai incontrato inviano indicazioni sulla COVID-19."</string>
 
     <!-- Siehe inform_text_homescreen -->
-    <string name="inform_text_homescreen_nosymptoms">"Informa le persone che hai incontrato recentemente se sei positivo al COVID-19."</string>
+    <string name="inform_text_homescreen_nosymptoms">"Informa le persone che hai incontrato recentemente se sei positivo alla COVID-19."</string>
 
     <!-- Unerwarteter Fehler -->
     <string name="unexpected_error_title">"Si è verificato un errore imprevisto ({ERROR})."</string>
@@ -317,10 +317,10 @@ ed anonima"</string>
     <string name="hinweis_title">"Avviso importante"</string>
 
     <!-- Hinweis Text -->
-    <string name="hinweis_text">"Una persona che hai incontrato è risultata positiva per COVID-19."</string>
+    <string name="hinweis_text">"Una persona che hai incontrato è risultata positiva alla COVID-19."</string>
     <string name="button_report_illness">"Informa della malattia"</string>
     <string name="meldungen_meldung_title">"Avviso importante"</string>
-    <string name="meldungen_meldung_text">"Una persona che hai incontrato è risultata positiva per COVID-19. Informarti qui per le raccomandazioni ed il comportamento da adottare."</string>
+    <string name="meldungen_meldung_text">"Una persona che hai incontrato è risultata positiva alla COVID-19. Informarti qui per le raccomandazioni ed il comportamento da adottare."</string>
     <string name="meldungen_meldung_more_button">"Scopri di più"</string>
     <string name="tracing_active_title">"Tracciatura attiva"</string>
     <string name="tracing_active_text">"Gli incontri vengono salvati in modo anonimo sul tuo dispositivo."</string>
@@ -334,7 +334,7 @@ ed anonima"</string>
     <string name="meldungen_additional_info_text1">"Per interrompere la diffusione di un virus, è necessario interrompere la catena di infezione. Puoi farlo isolando le persone contagiose. C'è però un problema con il virus COVID-19: potresti essere contagioso prima di sentirti male! Ciò consente al virus di diffondersi, anche se le persone con sintomi si isolano questo perché siamo un passo indietro."</string>
 
     <!-- Meldungen: zusätzlicher Info Text -->
-    <string name="meldungen_additional_info_text2">"Pertanto le persone che sono entrate in contatto con chi è risultato positivo al COVID-19 devono essere informate. Ciò consente loro di isolarsi presto prima di sperimentare sintomi evitando così di contagiare altre persone. Ovviamente, non tutti i contatti hanno il virus, ma in questo modo quelli che ce l'hanno non lo trasmettono. Così saremo un passo avanti rispetto al virus."</string>
+    <string name="meldungen_additional_info_text2">"Pertanto le persone che sono entrate in contatto con chi è risultato positivo alla COVID-19 devono essere informate. Ciò consente loro di isolarsi presto prima di sperimentare sintomi evitando così di contagiare altre persone. Ovviamente, non tutti i contatti hanno il virus, ma in questo modo quelli che ce l'hanno non lo trasmettono. Così saremo un passo avanti rispetto al virus."</string>
 
     <!-- Hinweis beim Eingabefeld für den Authentifizierungs-Code -->
     <string name="auth_code_input_hint">"000-000"</string>
