@@ -18,15 +18,20 @@ object TracingStatusHelper {
     @JvmStatic
     fun updateStatusView(statusView: View, state: State, @StringRes title: Int, @StringRes text: Int) {
         val context = statusView.context
-        val iconView = statusView.findViewById<ImageView>(R.id.status_icon)
-        val titleView = statusView.findViewById<TextView>(R.id.status_title)
-        val textView = statusView.findViewById<TextView>(R.id.status_text)
-        titleView.setText(title)
-        titleView.setTextColor(context.getColor(state.titleColor))
-        textView.setText(text)
-        textView.setTextColor(context.getColor(state.textColor))
-        iconView.setImageResource(state.iconResource)
-        iconView.imageTintList = ColorStateList.valueOf(context.getColor(state.titleColor))
+        statusView.findViewById<ImageView>(R.id.status_icon).apply {
+            setImageResource(state.iconResource)
+            imageTintList = ColorStateList.valueOf(context.getColor(state.titleColor))
+        }
+
+        statusView.findViewById<TextView>(R.id.status_title).apply {
+            setText(title)
+            setTextColor(context.getColor(state.titleColor))
+        }
+        statusView.findViewById<TextView>(R.id.status_text).apply {
+            setText(text)
+            setTextColor(context.getColor(state.textColor))
+        }
+
     }
 
     enum class State(@param:ColorRes internal val titleColor: Int,
