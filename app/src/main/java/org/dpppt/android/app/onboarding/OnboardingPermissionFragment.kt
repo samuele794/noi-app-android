@@ -74,7 +74,7 @@ class OnboardingPermissionFragment : Fragment(R.layout.fragment_onboarding_permi
     }
 
     private fun updateButtonStatus() {
-        if (DeviceFeatureHelper.isLocationPermissionGranted(requireContext())) {
+        if (DeviceFeatureHelper.isLocationPermissionGranted(context)) {
             setButtonOk(onboarding_location_permission_button, R.string.button_permission_location_granted_android)
         } else {
             setButtonDefault(onboarding_location_permission_button, R.string.button_permission_location_android)
@@ -86,7 +86,7 @@ class OnboardingPermissionFragment : Fragment(R.layout.fragment_onboarding_permi
             setButtonDefault(onboarding_battery_button, R.string.button_battery_optimization)
         }
 
-        if (DeviceFeatureHelper.isBluetoothEnabled()) {
+        if (DeviceFeatureHelper.isBluetoothEnabled) {
             setButtonOk(onboarding_bluetooth_button, R.string.bluetooth_activated_label)
         } else {
             setButtonDefault(onboarding_bluetooth_button, R.string.activate_bluetooth_button)
