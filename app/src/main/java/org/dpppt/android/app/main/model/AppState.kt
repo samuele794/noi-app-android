@@ -3,12 +3,8 @@
  * https://www.ubique.ch
  * Copyright (c) 2020. All rights reserved.
  */
+package org.dpppt.android.app.main.model
 
-package org.dpppt.android.app.main.model;
-
-public enum AppState {
-	TRACING,
-	ERROR,
-	EXPOSED,
-	EXPOSED_ERROR
+enum class AppState {
+    TRACING, ERROR, EXPOSED, EXPOSED_ERROR
 }
