@@ -113,7 +113,6 @@ class ContactsFragment : Fragment(R.layout.fragment_contacts) {
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(): ContactsFragment {
             return ContactsFragment()
         }

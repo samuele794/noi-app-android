@@ -20,7 +20,7 @@ class NoCodeFragment : Fragment(R.layout.fragment_no_code) {
     }
 
     companion object {
-        @JvmStatic
+
         fun newInstance(): NoCodeFragment {
             return NoCodeFragment()
         }

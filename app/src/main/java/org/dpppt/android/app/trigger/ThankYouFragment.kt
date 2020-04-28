@@ -21,7 +21,7 @@ class ThankYouFragment : Fragment(R.layout.fragment_thank_you) {
     }
 
     companion object {
-        @JvmStatic
+
         fun newInstance(): ThankYouFragment {
             return ThankYouFragment()
         }

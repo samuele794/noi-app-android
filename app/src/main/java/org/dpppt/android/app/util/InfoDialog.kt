@@ -53,7 +53,7 @@ class InfoDialog : DialogFragment() {
             }
         }
 
-        @JvmStatic
+
         fun newInstance(text: String): InfoDialog {
             return InfoDialog().apply {
                 arguments = Bundle().apply {

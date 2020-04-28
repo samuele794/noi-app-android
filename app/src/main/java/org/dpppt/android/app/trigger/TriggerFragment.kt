@@ -94,7 +94,7 @@ class TriggerFragment : Fragment(R.layout.fragment_trigger) {
     companion object {
         private const val REGEX_CODE_PATTERN = "\\d{6}"
 
-        @JvmStatic
+
         fun newInstance(): TriggerFragment {
             return TriggerFragment()
         }

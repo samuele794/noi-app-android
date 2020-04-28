@@ -100,7 +100,7 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
     }
 
     companion object {
-        @JvmStatic
+
         fun newInstance(): NotificationsFragment {
             return NotificationsFragment()
         }

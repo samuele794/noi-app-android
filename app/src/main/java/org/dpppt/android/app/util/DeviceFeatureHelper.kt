@@ -19,13 +19,13 @@ object DeviceFeatureHelper {
             return bluetoothAdapter != null && bluetoothAdapter.isEnabled
         }
 
-    @JvmStatic
+
     fun isBatteryOptimizationDeactivated(context: Context): Boolean {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         return powerManager.isIgnoringBatteryOptimizations(context.packageName)
     }
 
-    @JvmStatic
+
     fun isLocationPermissionGranted(context: Context?): Boolean {
         return context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) } ==
                 PackageManager.PERMISSION_GRANTED

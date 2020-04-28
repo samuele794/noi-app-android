@@ -15,7 +15,7 @@ import androidx.annotation.StringRes
 import org.dpppt.android.app.R
 
 object TracingStatusHelper {
-    @JvmStatic
+
     fun updateStatusView(statusView: View, state: State, @StringRes title: Int, @StringRes text: Int) {
         val context = statusView.context
         statusView.findViewById<ImageView>(R.id.status_icon).apply {
