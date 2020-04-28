@@ -62,18 +62,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         tracingViewModel.tracingEnabledLiveData.observe(viewLifecycleOwner,
                 Observer { isTracing: Boolean ->
-                    val errors = tracingViewModel.errorsLiveData.value!!
-                    val state = if (errors.size > 0 || !isTracing) TracingStatusHelper.State.WARNING else TracingStatusHelper.State.OK
-                    val titleRes = if (state === TracingStatusHelper.State.OK)
-                        R.string.tracing_active_title
-                    else
-                        R.string.tracing_error_title
-                    val textRes = if (state === TracingStatusHelper.State.OK)
-                        R.string.tracing_active_text
-                    else
-                        R.string.tracing_error_text
+                    tracingViewModel.errorsLiveData.value?.let { errors ->
+                        val state = if (errors.isNotEmpty() || !isTracing)
+                            TracingStatusHelper.State.WARNING
+                        else
+                            TracingStatusHelper.State.OK
+                        val titleRes = if (state === TracingStatusHelper.State.OK)
+                            R.string.tracing_active_title
+                        else
+                            R.string.tracing_error_title
+                        val textRes = if (state === TracingStatusHelper.State.OK)
+                            R.string.tracing_active_text
+                        else
+                            R.string.tracing_error_text
 
-                    updateStatusView(contacts_status, state, titleRes, textRes)
+                        updateStatusView(contacts_status, state, titleRes, textRes)
+                    }
+
                 })
 
         card_notifications.setOnClickListener {
