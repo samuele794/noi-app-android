@@ -225,7 +225,7 @@ Die App greift aber nie auf deinen Standort zu!"</string>
     <string name="inform_text_homescreen_nosymptoms">"Informiere Personen, denen du begegnet bist anonym, wenn du positiv auf COVID-19 getestet wurdest."</string>
 
     <!-- Unerwarteter Fehler -->
-    <string name="unexpected_error_title">"Ein unerwarteter Fehler ist aufgetreten ({ERROR})."</string>
+    <string name="unexpected_error_title">"Ein unerwarteter Fehler ist aufgetreten (%s)."</string>
 
     <!-- Bluetooth Fehlermeldung -->
     <string name="bluetooth_turned_off">"Die App funktioniert nicht, weil Bluetooth ausgeschaltet ist."</string>

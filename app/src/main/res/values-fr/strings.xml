@@ -226,7 +226,7 @@ L'application n'accède jamais à votre position!"</string>
     <string name="inform_text_homescreen_nosymptoms">"Faites savoir anonymement aux personnes que vous connaissez si votre test est positif pour COVID-19."</string>
 
     <!-- Unerwarteter Fehler -->
-    <string name="unexpected_error_title">"Une erreur inattendue s'est produite ({ERROR})."</string>
+    <string name="unexpected_error_title">"Une erreur inattendue s'est produite (%s)."</string>
 
     <!-- Bluetooth Fehlermeldung -->
     <string name="bluetooth_turned_off">"L'application ne fonctionne pas car Bluetooth est désactivé."</string>

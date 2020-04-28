@@ -224,7 +224,7 @@ ed anonima"</string>
     <string name="inform_text_homescreen_nosymptoms">"Informa le persone che hai incontrato recentemente se sei positivo alla COVID-19."</string>
 
     <!-- Unerwarteter Fehler -->
-    <string name="unexpected_error_title">"Si è verificato un errore imprevisto ({ERROR})."</string>
+    <string name="unexpected_error_title">"Si è verificato un errore imprevisto (%s)."</string>
 
     <!-- Bluetooth Fehlermeldung -->
     <string name="bluetooth_turned_off">"Protetti non funziona perché il Bluetooth è disattivato."</string>
