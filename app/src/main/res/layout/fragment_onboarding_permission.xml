@@ -1,138 +1,138 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Created by Ubique Innovation AG
   ~ https://www.ubique.ch
   ~ Copyright (c) 2020. All rights reserved.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:clipChildren="false"
-	android:clipToPadding="false"
-	android:gravity="center_horizontal"
-	android:orientation="vertical"
-	android:paddingTop="@dimen/spacing_huge"
-	android:paddingBottom="@dimen/spacing_large">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-	<TextView
-		style="@style/NextStep.Text.Small"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="@dimen/spacing_very_large"
-		android:gravity="center_horizontal"
-		android:paddingStart="@dimen/spacing_huge"
-		android:paddingEnd="@dimen/spacing_huge"
-		android:text="@string/onboarding_top_label_how" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-	<ImageView
-		android:id="@+id/onboarding_illustration"
-		android:layout_width="match_parent"
-		android:layout_height="@dimen/illustration_height"
-		android:layout_marginBottom="@dimen/spacing_large"
-		android:paddingStart="@dimen/spacing_huge"
-		android:paddingEnd="@dimen/spacing_huge"
-		android:scaleType="fitCenter"
-		android:src="@drawable/ill_bluetooth" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacing_huge"
+            android:paddingBottom="@dimen/spacing_large">
 
-	<TextView
-		android:id="@+id/onboarding_title"
-		style="@style/NextStep.Text.Title"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/spacing_medium"
-		android:layout_marginBottom="@dimen/spacing_large"
-		android:gravity="center_horizontal"
-		android:paddingStart="@dimen/spacing_huge"
-		android:paddingEnd="@dimen/spacing_huge"
-		android:text="@string/onboarding_title_4" />
+            <TextView
+                android:id="@+id/onboarding_title"
+                style="@style/NextStep.Text.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_huge"
+                android:paddingEnd="@dimen/spacing_huge"
+                android:text="@string/onboarding_top_label_how"
+                app:layout_constraintTop_toTopOf="parent" />
 
-	<TextView
-		android:id="@+id/onboarding_description"
-		style="@style/NextStep.Text"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="@dimen/spacing_large"
-		android:gravity="center_horizontal"
-		android:paddingStart="@dimen/spacing_huge"
-		android:paddingEnd="@dimen/spacing_huge"
-		android:text="@string/onboarding_desc_4" />
+            <ImageView
+                android:id="@+id/onboarding_illustration"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/illustration_height"
+                android:layout_marginTop="@dimen/spacing_very_large"
+                android:paddingStart="@dimen/spacing_huge"
+                android:paddingEnd="@dimen/spacing_huge"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ill_bluetooth"
+                app:layout_constraintTop_toBottomOf="@id/onboarding_title" />
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/spacing_small">
+            <TextView
+                android:id="@+id/onboarding_title_auth"
+                style="@style/NextStep.Text.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:gravity="center_horizontal"
+                android:paddingStart="@dimen/spacing_huge"
+                android:paddingEnd="@dimen/spacing_huge"
+                android:text="@string/onboarding_title_4"
+                app:layout_constraintTop_toBottomOf="@id/onboarding_illustration" />
 
-		<Button
-			android:id="@+id/onboarding_location_permission_button"
-			style="@style/NextStep.Button"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:text="@string/button_permission_location_android"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintWidth_max="wrap"
-			app:layout_constraintWidth_percent="0.7" />
+            <TextView
+                android:id="@+id/onboarding_description"
+                style="@style/NextStep.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:gravity="center_horizontal"
+                android:paddingStart="@dimen/spacing_huge"
+                android:paddingEnd="@dimen/spacing_huge"
+                android:text="@string/onboarding_desc_4"
+                app:layout_constraintTop_toBottomOf="@id/onboarding_title_auth" />
 
-		<ImageView
-			android:id="@+id/onboarding_location_permission_info"
-			android:layout_width="@dimen/info_button_size"
-			android:layout_height="@dimen/info_button_size"
-			android:foreground="@drawable/ripple_circular"
-			android:padding="@dimen/spacing_small"
-			android:src="@drawable/ic_info"
-			android:tint="@color/blue_main"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintStart_toEndOf="@id/onboarding_location_permission_button"
-			app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/onboarding_location_permission_button"
+                style="@style/NextStep.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/button_permission_location_android"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/onboarding_description"
+                app:layout_constraintWidth_max="wrap"
+                app:layout_constraintWidth_percent="0.7" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/onboarding_location_permission_info"
+                android:layout_width="@dimen/info_button_size"
+                android:layout_height="@dimen/info_button_size"
+                android:foreground="@drawable/ripple_circular"
+                android:padding="@dimen/spacing_small"
+                android:src="@drawable/ic_info"
+                android:tint="@color/blue_main"
+                app:layout_constraintBottom_toBottomOf="@id/onboarding_location_permission_button"
+                app:layout_constraintStart_toEndOf="@id/onboarding_location_permission_button"
+                app:layout_constraintTop_toTopOf="@id/onboarding_location_permission_button" />
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/spacing_small">
+            <Button
+                android:id="@+id/onboarding_battery_button"
+                style="@style/NextStep.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/button_battery_optimization"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/onboarding_location_permission_button"
+                app:layout_constraintWidth_max="wrap"
+                app:layout_constraintWidth_percent="0.7" />
 
-		<Button
-			android:id="@+id/onboarding_battery_button"
-			style="@style/NextStep.Button"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:text="@string/button_battery_optimization"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintWidth_max="wrap"
-			app:layout_constraintWidth_percent="0.7" />
+            <ImageView
+                android:id="@+id/onboarding_battery_info"
+                android:layout_width="@dimen/info_button_size"
+                android:layout_height="@dimen/info_button_size"
+                android:foreground="@drawable/ripple_circular"
+                android:padding="@dimen/spacing_small"
+                android:src="@drawable/ic_info"
+                android:tint="@color/blue_main"
+                app:layout_constraintBottom_toBottomOf="@id/onboarding_battery_button"
+                app:layout_constraintStart_toEndOf="@id/onboarding_battery_button"
+                app:layout_constraintTop_toTopOf="@id/onboarding_battery_button" />
 
-		<ImageView
-			android:id="@+id/onboarding_battery_info"
-			android:layout_width="@dimen/info_button_size"
-			android:layout_height="@dimen/info_button_size"
-			android:foreground="@drawable/ripple_circular"
-			android:padding="@dimen/spacing_small"
-			android:src="@drawable/ic_info"
-			android:tint="@color/blue_main"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintStart_toEndOf="@id/onboarding_battery_button"
-			app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/onboarding_bluetooth_button"
+                style="@style/NextStep.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/activate_bluetooth_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/onboarding_battery_button" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
 
-	<Button
-		android:id="@+id/onboarding_bluetooth_button"
-		style="@style/NextStep.Button"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:layout_marginTop="@dimen/spacing_small"
-		android:text="@string/activate_bluetooth_button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

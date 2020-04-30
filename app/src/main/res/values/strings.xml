@@ -217,7 +217,7 @@ anonymous"</string>
     <string name="inform_text_homescreen_nosymptoms">"Inform your encounters, if you have been positively tested on COVID-19."</string>
 
     <!-- Unerwarteter Fehler -->
-    <string name="unexpected_error_title">"an unknown Error has occurred."</string>
+    <string name="unexpected_error_title">"an unknown Error has occurred. %s"</string>
 
     <!-- Bluetooth Fehlermeldung -->
     <string name="bluetooth_turned_off">"The App does not work, please activate Bluetooth."</string>
