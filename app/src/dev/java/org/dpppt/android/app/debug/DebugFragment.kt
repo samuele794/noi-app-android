@@ -63,10 +63,10 @@ class DebugFragment : Fragment(R.layout.fragment_debug) {
         val optionsGroup = view.findViewById<RadioGroup>(R.id.debug_state_options_group)
         optionsGroup.setOnCheckedChangeListener { _, checkedId: Int ->
             when (checkedId) {
-                R.id.debug_state_option_none -> tracingViewModel.debugAppState = DebugAppState.NONE
-                R.id.debug_state_option_healthy -> tracingViewModel.debugAppState = DebugAppState.HEALTHY
-                R.id.debug_state_option_exposed -> tracingViewModel.debugAppState = DebugAppState.CONTACT_EXPOSED
-                R.id.debug_state_option_infected -> tracingViewModel.debugAppState = DebugAppState.REPORTED_EXPOSED
+                R.id.debug_state_option_none -> tracingViewModel.setDebugAppState(DebugAppState.NONE)
+                R.id.debug_state_option_healthy -> tracingViewModel.setDebugAppState(DebugAppState.HEALTHY)
+                R.id.debug_state_option_exposed -> tracingViewModel.setDebugAppState(DebugAppState.CONTACT_EXPOSED)
+                R.id.debug_state_option_infected -> tracingViewModel.setDebugAppState(DebugAppState.REPORTED_EXPOSED)
             }
         }
         updateRadioGroup(optionsGroup)
@@ -74,7 +74,7 @@ class DebugFragment : Fragment(R.layout.fragment_debug) {
 
     private fun updateRadioGroup(optionsGroup: RadioGroup) {
 
-        when (tracingViewModel.debugAppState) {
+        when (tracingViewModel.getDebugAppState()) {
             DebugAppState.NONE -> R.id.debug_state_option_none
             DebugAppState.HEALTHY -> R.id.debug_state_option_healthy
             DebugAppState.CONTACT_EXPOSED -> R.id.debug_state_option_exposed

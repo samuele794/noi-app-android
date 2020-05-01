@@ -14,6 +14,7 @@ import android.content.IntentFilter
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import org.dpppt.android.app.debug.TracingStatusWrapper
 import org.dpppt.android.app.debug.model.DebugAppState
 import org.dpppt.android.app.main.model.AppState
 import org.dpppt.android.app.util.DeviceFeatureHelper.isBluetoothEnabled
@@ -32,7 +33,7 @@ class TracingViewModel(application: Application) : AndroidViewModel(application)
     internal val appStateLiveData = MutableLiveData<AppState>()
     internal val bluetoothEnabledLiveData = MutableLiveData<Boolean>()
 
-    var debugAppState = DebugAppState.NONE
+    private val tracingStatusWrapper = TracingStatusWrapper(DebugAppState.NONE)
 
     private val bluetoothReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -77,10 +78,18 @@ class TracingViewModel(application: Application) : AndroidViewModel(application)
         return bluetoothEnabledLiveData
     }
 
+    fun getDebugAppState(): DebugAppState {
+        return tracingStatusWrapper.getDebugAppState()
+    }
+
+    fun setDebugAppState(debugAppState: DebugAppState) {
+        tracingStatusWrapper.setDebugAppState(debugAppState)
+    }
+
     fun resetSdk(onDeleteListener: Runnable) {
         tracingEnabledLiveData.value?.let {
             if (it) DP3T.stop(getApplication())
-            debugAppState = DebugAppState.NONE
+            tracingStatusWrapper.setDebugAppState(DebugAppState.NONE)
             DP3T.clearData(getApplication(), onDeleteListener)
         }
 
@@ -117,33 +126,12 @@ class TracingViewModel(application: Application) : AndroidViewModel(application)
             tracingEnabledLiveData.value = status.isAdvertising && status.isReceiving
             numberOfHandshakesLiveData.value = status.numberOfHandshakes
 
-            val isReportedExposed = debugAppState === DebugAppState.REPORTED_EXPOSED || status.isReportedAsExposed
-            val isContactExposed = debugAppState === DebugAppState.CONTACT_EXPOSED || status.wasContactExposed()
+            val isReportedExposed = tracingStatusWrapper.isReportedAsExposed()
+            val isContactExposed = tracingStatusWrapper.wasContactExposed()
             exposedLiveData.value = Pair(isReportedExposed, isContactExposed)
             errorsLiveData.value = status.errors
 
-            val hasError = status.errors.size > 0 || !(status.isAdvertising || status.isReceiving)
-
-            when (debugAppState) {
-                DebugAppState.NONE -> {
-                    when {
-                        status.isReportedAsExposed
-                                || status.wasContactExposed() -> {
-                            appStateLiveData.setValue(if (hasError) AppState.EXPOSED_ERROR else AppState.EXPOSED)
-                        }
-                        hasError -> appStateLiveData.setValue(AppState.ERROR)
-                        else -> appStateLiveData.setValue(AppState.TRACING)
-                    }
-                }
-                DebugAppState.HEALTHY -> {
-                    appStateLiveData.setValue(if (hasError) AppState.ERROR else AppState.TRACING)
-                }
-                DebugAppState.REPORTED_EXPOSED,
-                DebugAppState.CONTACT_EXPOSED ->
-                    appStateLiveData.setValue(if (hasError) AppState.EXPOSED_ERROR else AppState.EXPOSED)
-
-            }
-
+            appStateLiveData.setValue(tracingStatusWrapper.getAppState());
 
         }
         invalidateBluetoothState()

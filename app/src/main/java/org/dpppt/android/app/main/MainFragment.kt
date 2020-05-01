@@ -21,6 +21,7 @@ import org.dpppt.android.app.main.model.AppState
 import org.dpppt.android.app.main.views.HeaderView
 import org.dpppt.android.app.notifications.NotificationsFragment
 import org.dpppt.android.app.trigger.TriggerFragment
+import org.dpppt.android.app.util.DebugUtils
 import org.dpppt.android.app.util.TracingStatusHelper
 import org.dpppt.android.app.util.TracingStatusHelper.updateStatusView
 
@@ -52,7 +53,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun setupHeader(view: View) {
         headerView = view.findViewById(R.id.main_header_container)
         tracingViewModel.appStateLiveData
-                .observe(viewLifecycleOwner, Observer { appState: AppState? -> headerView.setState(appState) })
+                .observe(viewLifecycleOwner, Observer { appState: AppState -> headerView.setState(appState) })
     }
 
     private fun setupCards(view: View) {
@@ -131,12 +132,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setupDebugButton(view: View) {
-        main_button_debug.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                    .replace(R.id.main_fragment_container, DebugFragment.newInstance())
-                    .addToBackStack(DebugFragment::class.java.canonicalName)
-                    .commit()
+        if (DebugUtils.isDev) {
+            main_button_debug.visibility = View.VISIBLE;
+            main_button_debug.setOnClickListener {
+                parentFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragment_container, DebugFragment.newInstance())
+                        .addToBackStack(DebugFragment::class.java.canonicalName)
+                        .commit()
+            }
+        } else {
+            main_button_debug.visibility = View.GONE;
         }
+
+
     }
 
     companion object {
