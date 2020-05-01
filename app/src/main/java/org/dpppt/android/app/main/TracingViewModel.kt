@@ -126,9 +126,7 @@ class TracingViewModel(application: Application) : AndroidViewModel(application)
             tracingEnabledLiveData.value = status.isAdvertising && status.isReceiving
             numberOfHandshakesLiveData.value = status.numberOfHandshakes
 
-            val isReportedExposed = tracingStatusWrapper.isReportedAsExposed()
-            val isContactExposed = tracingStatusWrapper.wasContactExposed()
-            exposedLiveData.value = Pair(isReportedExposed, isContactExposed)
+            exposedLiveData.value = Pair(tracingStatusWrapper.isReportedAsExposed(), tracingStatusWrapper.wasContactExposed())
             errorsLiveData.value = status.errors
 
             appStateLiveData.setValue(tracingStatusWrapper.getAppState());

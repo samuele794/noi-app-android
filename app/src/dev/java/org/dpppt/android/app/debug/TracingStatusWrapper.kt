@@ -47,6 +47,7 @@ class TracingStatusWrapper(debugAppState: DebugAppState) : TracingStatusInterfac
                 DebugAppState.REPORTED_EXPOSED, DebugAppState.CONTACT_EXPOSED -> if (hasError) AppState.EXPOSED_ERROR else AppState.EXPOSED
             }
         }
+        //        throw IllegalStateException("Unkown debug AppState: $debugAppState");
         return AppState.ERROR
     }
 
