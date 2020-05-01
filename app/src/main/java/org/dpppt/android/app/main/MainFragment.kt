@@ -7,21 +7,23 @@ package org.dpppt.android.app.main
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Pair
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.card_contacts.*
 import kotlinx.android.synthetic.main.card_notifications.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import org.dpppt.android.app.R
 import org.dpppt.android.app.contacts.ContactsFragment
+import org.dpppt.android.app.debug.DebugFragment
 import org.dpppt.android.app.main.model.AppState
 import org.dpppt.android.app.main.views.HeaderView
 import org.dpppt.android.app.notifications.NotificationsFragment
 import org.dpppt.android.app.trigger.TriggerFragment
 import org.dpppt.android.app.util.TracingStatusHelper
 import org.dpppt.android.app.util.TracingStatusHelper.updateStatusView
+
 
 class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var tracingViewModel: TracingViewModel
@@ -34,6 +36,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupHeader(view)
         setupCards(view)
+        setupDebugButton(view)
     }
 
     override fun onStart() {
@@ -125,6 +128,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
                     updateStatusView(notificationStatusView, state, title, text)
                 })
+    }
+
+    private fun setupDebugButton(view: View) {
+        main_button_debug.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_fragment_container, DebugFragment.newInstance())
+                    .addToBackStack(DebugFragment::class.java.canonicalName)
+                    .commit()
+        }
     }
 
     companion object {

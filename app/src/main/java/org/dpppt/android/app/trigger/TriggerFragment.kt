@@ -54,7 +54,7 @@ class TriggerFragment : Fragment(R.layout.fragment_trigger) {
                     Date(calendarNow.timeInMillis),
                     ExposeeAuthData(inputBase64), object : CallbackListener<Void?> {
                 override fun onSuccess(response: Void?) {
-                    progressDialog.hide()
+                    progressDialog.dismiss()
                     parentFragmentManager.beginTransaction()
                             .replace(R.id.main_fragment_container, ThankYouFragment.newInstance())
                             .addToBackStack(ThankYouFragment::class.qualifiedName)
@@ -62,7 +62,7 @@ class TriggerFragment : Fragment(R.layout.fragment_trigger) {
                 }
 
                 override fun onError(throwable: Throwable) {
-                    progressDialog.hide()
+                    progressDialog.dismiss()
 
                     val errorTextException = when (throwable) {
                         is ResponseException -> throwable.message ?: ""
