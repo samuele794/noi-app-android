@@ -125,6 +125,8 @@ class TracingViewModel(application: Application) : AndroidViewModel(application)
         tracingStatusLiveData.observeForever { status: TracingStatus ->
             tracingEnabledLiveData.value = status.isAdvertising && status.isReceiving
             numberOfHandshakesLiveData.value = status.numberOfHandshakes
+            tracingStatusWrapper.setStatus(status)
+
 
             exposedLiveData.value = Pair(tracingStatusWrapper.isReportedAsExposed(), tracingStatusWrapper.wasContactExposed())
             errorsLiveData.value = status.errors
