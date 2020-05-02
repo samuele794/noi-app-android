@@ -7,13 +7,20 @@ package org.dpppt.android.app.main;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.dpppt.android.app.R;
 import org.dpppt.android.app.contacts.ContactsFragment;
@@ -23,6 +30,7 @@ import org.dpppt.android.app.main.views.HeaderView;
 import org.dpppt.android.app.notifications.NotificationsFragment;
 import org.dpppt.android.app.trigger.TriggerFragment;
 import org.dpppt.android.app.util.TracingStatusHelper;
+import org.dpppt.android.sdk.DP3T;
 import org.dpppt.android.sdk.TracingStatus;
 
 public class MainFragment extends Fragment {
@@ -123,12 +131,20 @@ public class MainFragment extends Fragment {
 				});
 	}
 
+
+
 	private void setupDebugButton(View view) {
+
+		Timer timerDebug = new Timer();
 		View debugButton = view.findViewById(R.id.main_button_debug);
 		if (DebugUtils.isDev()) {
 			debugButton.setVisibility(View.VISIBLE);
+
 			debugButton.setOnClickListener(
-					v -> DebugFragment.startDebugFragment(getParentFragmentManager()));
+					v -> {
+
+						DebugFragment.startDebugFragment(getParentFragmentManager());
+					});
 		} else {
 			debugButton.setVisibility(View.GONE);
 		}

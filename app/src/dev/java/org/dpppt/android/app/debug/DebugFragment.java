@@ -1,17 +1,26 @@
 package org.dpppt.android.app.debug;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -23,17 +32,22 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.dpppt.android.app.R;
 import org.dpppt.android.app.debug.model.DebugAppState;
 import org.dpppt.android.app.main.TracingViewModel;
 import org.dpppt.android.app.util.InfoDialog;
+import org.dpppt.android.sdk.DP3T;
 import org.dpppt.android.sdk.TracingStatus;
 
 public class DebugFragment extends Fragment {
 
 	private static final DateFormat DATE_FORMAT_SYNC = SimpleDateFormat.getDateTimeInstance();
 	private TracingViewModel tracingViewModel;
+	private Timer debugTimer;
+	private int lastNumberOfHandshake = 0;
 
 	public static void startDebugFragment(FragmentManager parentFragmentManager) {
 		parentFragmentManager.beginTransaction()
@@ -85,6 +99,38 @@ public class DebugFragment extends Fragment {
 						.show(getChildFragmentManager(), InfoDialog.class.getCanonicalName());
 				updateRadioGroup(getView().findViewById(R.id.debug_state_options_group));
 			});
+			//Restart tracing after reset
+			DP3T.start(getContext());
+		});
+
+		Switch switchDebug = view.findViewById(R.id.debug_force_sync_switch);
+		switchDebug.setOnCheckedChangeListener((buttonView, isChecked) -> {
+			if (isChecked) {
+				//  force sync every 10s
+				debugTimer = new Timer();
+				debugTimer.scheduleAtFixedRate(new TimerTask() {
+					private Handler updateUI = new Handler(){
+						@Override
+						public void dispatchMessage(Message msg) {
+							super.dispatchMessage(msg);
+							checkState();
+						}
+					};
+					@Override
+					public void run() {
+						try {
+							updateUI.sendEmptyMessage(0);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}, 1000, 10000);
+				// end
+			} else {
+				debugTimer.cancel();
+				DP3T.start(getContext());
+
+			}
 		});
 	}
 
@@ -164,5 +210,28 @@ public class DebugFragment extends Fragment {
 	private String getBooleanDebugString(boolean value) {
 		return getString(value ? R.string.debug_sdk_state_boolean_true : R.string.debug_sdk_state_boolean_false);
 	}
+
+	// added first very simple debug code
+	// Please add code for option in config file for disable this code
+
+	private void checkState() {
+		if (DP3T.isStarted(this.getContext()) ) {
+			try {
+				Log.d("[Protetti]","Sync con il backend");
+				// DP3T.sync(getContext());
+			} catch (Exception e) {
+				Log.d("[Protetti]", "Errore");
+			}
+			TracingStatus status = DP3T.getStatus(this.getContext());
+			Log.d("[Protetti]", "Aggiornamento stato");
+			Log.d("[Protetti]", "numero Handshake precedenti: " + lastNumberOfHandshake);
+			Log.d("[Protetti]", "numero Handshake attuali: " + status.getNumberOfHandshakes());
+			if (status.getNumberOfHandshakes() != lastNumberOfHandshake) {
+				lastNumberOfHandshake = status.getNumberOfHandshakes();
+				Toast.makeText(getContext(), "handshake attuali : " + status.getNumberOfHandshakes(), Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+	// End
 
 }

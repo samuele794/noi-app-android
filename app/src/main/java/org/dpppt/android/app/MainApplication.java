@@ -16,11 +16,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -28,41 +23,11 @@ import androidx.core.app.NotificationCompat;
 import org.dpppt.android.sdk.DP3T;
 import org.dpppt.android.sdk.TracingStatus;
 import org.dpppt.android.sdk.internal.backend.models.ApplicationInfo;
-import org.dpppt.android.sdk.internal.database.Database;
 import org.dpppt.android.sdk.internal.util.ProcessUtil;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 public class MainApplication extends Application {
 
 	private static final String NOTIFICATION_CHANNEL_ID = "contact-channel";
-
-	// added first very simple debug code
-	// Please add code for option in config file for disable this code
-
-	private int lastNumberOfHandshake = 0;
-
-	private void checkState() {
-		if (DP3T.isStarted(getApplicationContext()) ) {
-			try {
-				Log.d("[Protetti]","Sync con il backend");
-				DP3T.sync(getApplicationContext());
-			} catch (Exception e) {
-				Log.d("[Protetti]", "Errore");
-			}
-        	TracingStatus status = DP3T.getStatus(getApplicationContext());
-			Log.d("[Protetti]", "Aggiornamento stato");
-			Log.d("[Protetti]", "numero Handshake precedenti: " + lastNumberOfHandshake);
-			Log.d("[Protetti]", "numero Handshake attuali: " + status.getNumberOfHandshakes());
-			if (status.getNumberOfHandshakes() != lastNumberOfHandshake) {
-				lastNumberOfHandshake = status.getNumberOfHandshakes();
-				Toast.makeText(getApplicationContext(), "handshake attuali : " + status.getNumberOfHandshakes(), Toast.LENGTH_LONG).show();
-			}
-		}
-	}
-	// End
 
 	@Override
 	public void onCreate() {
@@ -71,26 +36,6 @@ public class MainApplication extends Application {
 		if (ProcessUtil.isMainProcess(this)) {
 			registerReceiver(broadcastReceiver, DP3T.getUpdateIntentFilter());
 			DP3T.init(this, new ApplicationInfo("it.noiapp.demo", "https://protetti.app/"));
-
-			// AT this time sdk not fire events when it make a handshake
-			new Timer().scheduleAtFixedRate(new TimerTask() {
-				private Handler updateUI = new Handler(){
-					@Override
-					public void dispatchMessage(Message msg) {
-						super.dispatchMessage(msg);
-						checkState();
-					}
-				};
-				@Override
-				public void run() {
-					try {
-						updateUI.sendEmptyMessage(0);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}, 1000, 10000);
-			// end
 		}
 	}
 
