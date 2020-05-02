@@ -37,11 +37,12 @@ public class MainApplication extends Application {
 			registerReceiver(broadcastReceiver, DP3T.getUpdateIntentFilter());
 			DP3T.init(this, new ApplicationInfo("it.noiapp.demo", "https://protetti.app/"));
 		}
+
 	}
 
 	@Override
 	public void onTerminate() {
-		if (ProcessUtil.isMainProcess(this)) {
+        if (ProcessUtil.isMainProcess(this)) {
 			unregisterReceiver(broadcastReceiver);
 		}
 		super.onTerminate();
@@ -55,9 +56,6 @@ public class MainApplication extends Application {
 
 			if (!prefs.getBoolean("notification_shown", false)) {
 				TracingStatus status = DP3T.getStatus(context);
-
-				// here is best position for checkState
-				// checkState(context);
 
 				if (status.wasContactExposed()) {
 

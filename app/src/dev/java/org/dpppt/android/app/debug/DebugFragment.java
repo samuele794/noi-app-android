@@ -1,12 +1,12 @@
 package org.dpppt.android.app.debug;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -14,12 +14,10 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,8 +44,10 @@ public class DebugFragment extends Fragment {
 
 	private static final DateFormat DATE_FORMAT_SYNC = SimpleDateFormat.getDateTimeInstance();
 	private TracingViewModel tracingViewModel;
-	private Timer debugTimer;
+	private  static Timer debugTimer;
 	private int lastNumberOfHandshake = 0;
+	private static boolean sync = false;
+	private Switch switchDebug;
 
 	public static void startDebugFragment(FragmentManager parentFragmentManager) {
 		parentFragmentManager.beginTransaction()
@@ -65,13 +65,32 @@ public class DebugFragment extends Fragment {
 	}
 
 	@Override
+	public void onPause() {
+		if (sync) {
+			sync = false;
+			debugTimer.cancel();
+			switchDebug.setChecked(this.sync);
+		}
+		super.onPause();
+
+	}
+
+	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		int SDK_INT = android.os.Build.VERSION.SDK_INT;
+		if (SDK_INT > 8)
+		{
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+					.permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+		}
 		tracingViewModel = new ViewModelProvider(requireActivity()).get(TracingViewModel.class);
 	}
 
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
 		Toolbar toolbar = view.findViewById(R.id.contacts_toolbar);
 		toolbar.setNavigationOnClickListener(v -> getParentFragmentManager().popBackStack());
 
@@ -100,13 +119,19 @@ public class DebugFragment extends Fragment {
 				updateRadioGroup(getView().findViewById(R.id.debug_state_options_group));
 			});
 			//Restart tracing after reset
-			DP3T.start(getContext());
+			if (sync) {
+				sync = false;
+				debugTimer.cancel();
+				switchDebug.setChecked(this.sync);
+			}
 		});
 
-		Switch switchDebug = view.findViewById(R.id.debug_force_sync_switch);
+		switchDebug = view.findViewById(R.id.debug_force_sync_switch);
+		switchDebug.setChecked(this.sync);
 		switchDebug.setOnCheckedChangeListener((buttonView, isChecked) -> {
 			if (isChecked) {
 				//  force sync every 10s
+				this.sync = true;
 				debugTimer = new Timer();
 				debugTimer.scheduleAtFixedRate(new TimerTask() {
 					private Handler updateUI = new Handler(){
@@ -127,9 +152,8 @@ public class DebugFragment extends Fragment {
 				}, 1000, 10000);
 				// end
 			} else {
+				this.sync = false;
 				debugTimer.cancel();
-				DP3T.start(getContext());
-
 			}
 		});
 	}
@@ -211,24 +235,24 @@ public class DebugFragment extends Fragment {
 		return getString(value ? R.string.debug_sdk_state_boolean_true : R.string.debug_sdk_state_boolean_false);
 	}
 
-	// added first very simple debug code
+	// added very simple debug code
 	// Please add code for option in config file for disable this code
 
 	private void checkState() {
-		if (DP3T.isStarted(this.getContext()) ) {
+		if (DP3T.isStarted(getContext()) ) {
 			try {
 				Log.d("[Protetti]","Sync con il backend");
-				// DP3T.sync(getContext());
+				DP3T.sync(getContext());
+				TracingStatus status = DP3T.getStatus(getContext());
+				Log.d("[Protetti]", "Aggiornamento stato");
+				Log.d("[Protetti]", "numero Handshake precedenti: " + lastNumberOfHandshake);
+				Log.d("[Protetti]", "numero Handshake attuali: " + status.getNumberOfHandshakes());
+				if (status.getNumberOfHandshakes() != lastNumberOfHandshake) {
+					lastNumberOfHandshake = status.getNumberOfHandshakes();
+					Toast.makeText(getContext(), "handshake attuali : " + status.getNumberOfHandshakes(), Toast.LENGTH_LONG).show();
+				}
 			} catch (Exception e) {
-				Log.d("[Protetti]", "Errore");
-			}
-			TracingStatus status = DP3T.getStatus(this.getContext());
-			Log.d("[Protetti]", "Aggiornamento stato");
-			Log.d("[Protetti]", "numero Handshake precedenti: " + lastNumberOfHandshake);
-			Log.d("[Protetti]", "numero Handshake attuali: " + status.getNumberOfHandshakes());
-			if (status.getNumberOfHandshakes() != lastNumberOfHandshake) {
-				lastNumberOfHandshake = status.getNumberOfHandshakes();
-				Toast.makeText(getContext(), "handshake attuali : " + status.getNumberOfHandshakes(), Toast.LENGTH_LONG).show();
+				Log.d("[Protetti]", "si è verificato un errore");
 			}
 		}
 	}
