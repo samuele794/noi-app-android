@@ -40,7 +40,7 @@ public class MainApplication extends Application {
 
 	@Override
 	public void onTerminate() {
-	    if (ProcessUtil.isMainProcess(this)) {
+		if (ProcessUtil.isMainProcess(this)) {
 			unregisterReceiver(broadcastReceiver);
 		}
 		super.onTerminate();
