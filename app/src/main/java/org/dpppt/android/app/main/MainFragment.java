@@ -8,7 +8,6 @@ package org.dpppt.android.app.main;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -124,8 +123,6 @@ public class MainFragment extends Fragment {
 				});
 	}
 
-
-
 	private void setupDebugButton(View view) {
 
 		View debugButton = view.findViewById(R.id.main_button_debug);
@@ -133,10 +130,7 @@ public class MainFragment extends Fragment {
 			debugButton.setVisibility(View.VISIBLE);
 
 			debugButton.setOnClickListener(
-					v -> {
-
-						DebugFragment.startDebugFragment(getParentFragmentManager());
-					});
+					v -> DebugFragment.startDebugFragment(getParentFragmentManager()));
 		} else {
 			debugButton.setVisibility(View.GONE);
 		}

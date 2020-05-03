@@ -16,7 +16,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
@@ -25,6 +24,7 @@ import org.dpppt.android.sdk.TracingStatus;
 import org.dpppt.android.sdk.internal.backend.models.ApplicationInfo;
 import org.dpppt.android.sdk.internal.util.ProcessUtil;
 
+
 public class MainApplication extends Application {
 
 	private static final String NOTIFICATION_CHANNEL_ID = "contact-channel";
@@ -32,17 +32,15 @@ public class MainApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
 		if (ProcessUtil.isMainProcess(this)) {
 			registerReceiver(broadcastReceiver, DP3T.getUpdateIntentFilter());
 			DP3T.init(this, new ApplicationInfo("it.noiapp.demo", "https://protetti.app/"));
 		}
-
 	}
 
 	@Override
 	public void onTerminate() {
-        if (ProcessUtil.isMainProcess(this)) {
+	    if (ProcessUtil.isMainProcess(this)) {
 			unregisterReceiver(broadcastReceiver);
 		}
 		super.onTerminate();
@@ -53,10 +51,8 @@ public class MainApplication extends Application {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			SharedPreferences prefs = context.getSharedPreferences("notification_prefs", Context.MODE_PRIVATE);
-
 			if (!prefs.getBoolean("notification_shown", false)) {
 				TracingStatus status = DP3T.getStatus(context);
-
 				if (status.wasContactExposed()) {
 
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
