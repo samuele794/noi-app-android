@@ -389,7 +389,7 @@ Infoline Coronavirus
     <string name="debug_state_setting_title">"Forza stato dell'app"</string>
 
     <string name="debug_force_sync_title">"Forza il sync"</string>
-    <string name="debug_force_sync_subtitle">"imposta il sync a 10 secondi"</string>
+    <string name="debug_force_sync_subtitle">imposta il sync a 60 secondi</string>
 
     <!-- Erklärungstext für die Debug-Einstellungen zur Status-Überschreibung -->
     <string name="debug_state_setting_text">"Questa impostazione sovrascrive lo stato visivo dell'app. La funzionalità di tracciatura non è interessata."</string>

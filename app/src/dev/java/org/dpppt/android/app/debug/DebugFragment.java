@@ -1,11 +1,12 @@
 package org.dpppt.android.app.debug;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.StrictMode;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -17,7 +18,6 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,30 +26,28 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import org.dpppt.android.app.R;
+import org.dpppt.android.app.debug.model.DebugAppState;
+import org.dpppt.android.app.debug.sync.SyncService;
+import org.dpppt.android.app.main.TracingViewModel;
+import org.dpppt.android.app.util.InfoDialog;
+import org.dpppt.android.sdk.TracingStatus;
+import org.dpppt.android.sdk.internal.AppConfigManager;
+import org.dpppt.android.sdk.internal.backend.models.ApplicationInfo;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import org.dpppt.android.app.R;
-import org.dpppt.android.app.debug.model.DebugAppState;
-import org.dpppt.android.app.main.TracingViewModel;
-import org.dpppt.android.app.util.InfoDialog;
-import org.dpppt.android.sdk.DP3T;
-import org.dpppt.android.sdk.TracingStatus;
-import org.dpppt.android.sdk.internal.AppConfigManager;
-import org.dpppt.android.sdk.internal.backend.models.ApplicationInfo;
+import static org.dpppt.android.app.debug.sync.SyncService.REPEAT_MILLIS;
 
 public class DebugFragment extends Fragment {
 
 	private static final DateFormat DATE_FORMAT_SYNC = SimpleDateFormat.getDateTimeInstance();
 	private TracingViewModel tracingViewModel;
-	private  static Timer debugTimer;
-	private int lastNumberOfHandshake = 0;
-	private static boolean sync = false;
 	private Switch switchDebug;
+	private AlarmManager alarmManager;
 
 	public static void startDebugFragment(FragmentManager parentFragmentManager) {
 		parentFragmentManager.beginTransaction()
@@ -67,27 +65,17 @@ public class DebugFragment extends Fragment {
 	}
 
 	@Override
-	public void onPause() {
-		if (sync) {
-			sync = false;
-			debugTimer.cancel();
-			switchDebug.setChecked(this.sync);
-		}
-		super.onPause();
-
-	}
-
-	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		int SDK_INT = android.os.Build.VERSION.SDK_INT;
-		if (SDK_INT > 8)
-		{
+		if (SDK_INT > 8) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
 		tracingViewModel = new ViewModelProvider(requireActivity()).get(TracingViewModel.class);
+		alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+
 	}
 
 	@Override
@@ -107,7 +95,7 @@ public class DebugFragment extends Fragment {
 			boolean isTracing = (status.isAdvertising() || status.isReceiving()) && status.getErrors().size() == 0;
 			statusText.setBackgroundTintList(ColorStateList.valueOf(
 					isTracing ? getResources().getColor(R.color.status_green_bg, null)
-							  : getResources().getColor(R.color.status_red_bg, null)));
+							: getResources().getColor(R.color.status_red_bg, null)));
 		});
 
 		view.findViewById(R.id.debug_button_reset).setOnClickListener(v -> {
@@ -126,43 +114,20 @@ public class DebugFragment extends Fragment {
 				updateRadioGroup(getView().findViewById(R.id.debug_state_options_group));
 			});
 			appConfigManager.setManualApplicationInfo(appcfg);
-
-			//Restart tracing after reset
-			if (sync) {
-				sync = false;
-				debugTimer.cancel();
-				switchDebug.setChecked(this.sync);
-			}
 		});
 
 		switchDebug = view.findViewById(R.id.debug_force_sync_switch);
-		switchDebug.setChecked(this.sync);
+
+		switchDebug.setChecked(SyncService.syncServiceIsRunning(getContext()));
 		switchDebug.setOnCheckedChangeListener((buttonView, isChecked) -> {
 			if (isChecked) {
-				//  force sync every 10s
-				this.sync = true;
-				debugTimer = new Timer();
-				debugTimer.scheduleAtFixedRate(new TimerTask() {
-					private Handler updateUI = new Handler(){
-						@Override
-						public void dispatchMessage(Message msg) {
-							super.dispatchMessage(msg);
-							checkState();
-						}
-					};
-					@Override
-					public void run() {
-						try {
-							updateUI.sendEmptyMessage(0);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}, 1000, 10000);
-				// end
+				Log.d("[Protetti]", "Avvio Sync");
+				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+						System.currentTimeMillis(), REPEAT_MILLIS, SyncService.getSyncIntent(getContext()));
 			} else {
-				this.sync = false;
-				debugTimer.cancel();
+				PendingIntent pendingIntent = SyncService.getSyncIntent(getContext());
+				alarmManager.cancel(pendingIntent);
+				pendingIntent.cancel();
 			}
 		});
 	}
@@ -243,28 +208,5 @@ public class DebugFragment extends Fragment {
 	private String getBooleanDebugString(boolean value) {
 		return getString(value ? R.string.debug_sdk_state_boolean_true : R.string.debug_sdk_state_boolean_false);
 	}
-
-	// added very simple debug code
-	// Please add code for option in config file for disable this code
-
-	private void checkState() {
-		if (DP3T.isStarted(getContext()) ) {
-			try {
-				Log.d("[Protetti]","Sync con il backend");
-				DP3T.sync(getContext());
-				TracingStatus status = DP3T.getStatus(getContext());
-				Log.d("[Protetti]", "Aggiornamento stato");
-				Log.d("[Protetti]", "numero Handshake precedenti: " + lastNumberOfHandshake);
-				Log.d("[Protetti]", "numero Handshake attuali: " + status.getNumberOfHandshakes());
-				if (status.getNumberOfHandshakes() != lastNumberOfHandshake) {
-					lastNumberOfHandshake = status.getNumberOfHandshakes();
-					Toast.makeText(getContext(), "handshake attuali : " + status.getNumberOfHandshakes(), Toast.LENGTH_LONG).show();
-				}
-			} catch (Exception e) {
-				Log.d("[Protetti]", "si è verificato un errore");
-			}
-		}
-	}
-	// End
 
 }
